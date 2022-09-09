@@ -2,7 +2,7 @@
 .env
 contracts/node_modules
 subgraph/node_modules
-docker/data
+data
 
 .DS_STORE
 
