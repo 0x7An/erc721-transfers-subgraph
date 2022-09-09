@@ -1,0 +1,29 @@
+specVersion: 0.0.4
+features:
+  - ipfsOnEthereumContracts
+description: ERC721 Metadata
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ERC721
+    network: mainnet
+    source:
+      address: "0x0Ecb7EAF49ec2d5d9E4b4e6F4fAC421B904f1815"
+      abi: ERC721
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Token
+        - Collection
+        - Transfer
+      abis:
+        - name: ERC721
+          file: ./abis/ERC721.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/collection.ts

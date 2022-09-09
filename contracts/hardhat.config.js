@@ -4,7 +4,6 @@ require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
-const { private_keys } = require('./keys.json');
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -19,7 +18,6 @@ module.exports = {
   networks: {
     ganache: {
       url: "http://127.0.0.1:8545",
-      // accounts: private_keys,
     },
     rinkeby: {
       url: process.env.RINKEBY_URL || "",
