@@ -1,0 +1,19 @@
+{
+  "name": "subgraph-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "chain-up": "rm deployed_contracts && ganache-cli -p 8545 --account_keys_path ./keys.json",
+    "node-up": "cd docker && docker-compose up -d",
+    "node-down": "cd docker && docker-compose down && rm -fr data",
+    "contract-deploy": "cd contracts && yarn deploy",
+    "contract-mint": "cd contracts && yarn mint",
+    "graph-logs": "docker logs -f docker-graph-node-1",
+    "graph-create": "cd subgraph && yarn create-local",
+    "graph-deploy": "cd subgraph && yarn deploy-local"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
