@@ -33,7 +33,7 @@ async function mint(address) {
       from: accounts[0].address,
     })
 
-    console.log('transfer', tx);
+    // console.log('transfer', tx);
   } catch (error) {
     console.log(error);
   }
@@ -41,12 +41,8 @@ async function mint(address) {
 
 // declare main funtion to loop over a list and call mint function
 async function main() {
-  console.log(contracts)
-
-  contracts.forEach(async (contract) => {
-    console.log(contract.address)
-    await mint(contract.address);
-  });
+  console.log(contracts.length + ' contracts found');
+  await mint(contracts[contracts.length - 1].address);
 }
 
 main().catch((error) => {

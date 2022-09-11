@@ -86,7 +86,7 @@ type Attribute @entity {
 
 type Collection @entity {
   " ERC721 collection address "
-  address: ID!
+  id: ID!
   
   " ERC721 collection name "
   name: String
