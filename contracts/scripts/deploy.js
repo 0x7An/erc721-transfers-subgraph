@@ -1,7 +1,7 @@
 const hre = require('hardhat');
 const { seedSubgraph, saveDeployedContract, createName } = require('./utils');
 
-async function deployContract() {
+async function deployContract(seedSubgraphBool) {
   const ERC721 = await hre.ethers.getContractFactory('ERC721StandardToken');
   const deployer = await hre.ethers.getSigners();
   const { contractName, symbol } = await createName();
@@ -16,17 +16,19 @@ async function deployContract() {
     createdAt: new Date().toISOString(),
   });
 
-  console.log('Contract deployed to:', erc721.address);
+  if (seedSubgraphBool) {
+    seedSubgraph(erc721.address);
+    console.log(`📗 ${erc721.address} - "${contractName}"`);
+  } else {
+    console.log(`📔 ${erc721.address} - "${contractName}"`);
+  }
   await contractDeployed.flipSaleState();
   return contractDeployed;
 }
 
 async function main() {
   for (let i = 0; i < 5; i++) {
-    const contract = await deployContract();
-    if (i === 0) {
-      seedSubgraph(contract.address);
-    }
+    await deployContract(i === 0);
   }
 }
 

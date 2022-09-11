@@ -5,10 +5,8 @@ const { exec } = require('child_process');
 const configPath = path.join(__dirname, '../..', 'deployed_contracts.json');
 
 async function seedSubgraph(address) {
-    console.log('subgraph root', address);
     const sedCommand = `sed -i '' 's/address: ".*"/address: "${address}"/g' ../subgraph/subgraph.yaml`;
-    const { stderr } = await exec(sedCommand);
-    if (stderr) console.error(stderr);
+    await exec(sedCommand);
 }
 
 async function createName() {

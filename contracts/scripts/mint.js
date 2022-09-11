@@ -1,10 +1,10 @@
 const hre = require('hardhat');
 const contracts = require('../../deployed_contracts.json');
 
-async function mint(address) {
+async function mint(contractAddress, fromAddress) {
   try {
     const ERC721 = await hre.ethers.getContractFactory('ERC721StandardToken');
-    const contract = await ERC721.attach(address);
+    const contract = await ERC721.attach(contractAddress);
     let contractDeployed = await contract.deployed();
 
     if (!contractDeployed) {
@@ -21,19 +21,15 @@ async function mint(address) {
       gasPrice: 999000,
     });
 
-    // console.log('mint', tx);
-
-    // get info from transaction hash
-    let receipt = await tx.wait();
-
-    // get all accounts
     const accounts = await hre.ethers.getSigners();
 
-    tx = await contractDeployed.transferFrom(accounts[0].address, accounts[1].address, receipt.events[0].args.tokenId.toString(), {
-      from: accounts[0].address,
+    let receipt = await tx.wait();
+
+    tx = await contractDeployed.transferFrom(fromAddress, accounts[1].address, receipt.events[0].args.tokenId.toString(), {
+      from: fromAddress,
     })
 
-    // console.log('transfer', tx);
+    return receipt.events[0].args.tokenId.toString()
   } catch (error) {
     console.log(error);
   }
@@ -41,8 +37,10 @@ async function mint(address) {
 
 // declare main funtion to loop over a list and call mint function
 async function main() {
+  const accounts = await hre.ethers.getSigners();
   console.log(contracts.length + ' contracts found');
-  await mint(contracts[contracts.length - 1].address);
+  const tokenId = await mint(contracts[contracts.length - 1].address, accounts[0].address);
+  console.log(`🟢 ${accounts[0].address} minted one ${contracts[contracts.length - 1].name} #"${tokenId}"`);
 }
 
 main().catch((error) => {
