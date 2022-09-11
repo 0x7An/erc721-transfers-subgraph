@@ -6,7 +6,7 @@ async function deployContract(seedSubgraphBool) {
   const deployer = await hre.ethers.getSigners();
   const { contractName, symbol } = await createName();
   const erc721 = await ERC721.deploy(contractName, symbol, 10000);
-  let contractDeployed = await erc721.deployed();
+  const contractDeployed = await erc721.deployed();
 
   await saveDeployedContract({
     name: contractName,
@@ -16,19 +16,15 @@ async function deployContract(seedSubgraphBool) {
     createdAt: new Date().toISOString(),
   });
 
-  if (seedSubgraphBool) {
-    seedSubgraph(erc721.address);
-    console.log(`📗 ${erc721.address} - "${contractName}"`);
-  } else {
-    console.log(`📔 ${erc721.address} - "${contractName}"`);
-  }
   await contractDeployed.flipSaleState();
+  if (seedSubgraphBool) seedSubgraph(erc721.address);
+  console.log(seedSubgraphBool ? '📗' : '📔', `${erc721.address} - "${contractName}"`);
   return contractDeployed;
 }
 
 async function main() {
   for (let i = 0; i < 5; i++) {
-    await deployContract(i === 0);
+    await deployContract(i === 4);
   }
 }
 
