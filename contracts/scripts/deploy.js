@@ -17,6 +17,8 @@ async function deployContract(seedSubgraphBool) {
   });
 
   await contractDeployed.flipSaleState();
+  await contractDeployed.setBaseURI('https://us-central1-bayc-metadata.cloudfunctions.net/api/tokens/');
+
   if (seedSubgraphBool) seedSubgraph(erc721.address);
   console.log(seedSubgraphBool ? '📗' : '📔', `${erc721.address} - "${contractName}"`);
   return contractDeployed;

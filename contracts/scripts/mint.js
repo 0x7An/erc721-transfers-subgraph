@@ -12,11 +12,16 @@ async function mint(contractAddress, fromAddress) {
     }
 
     // call setBaseURI function
-    // const tx = await contractDeployed.setBaseURI('https://us-central1-bayc-metadata.cloudfunctions.net/api/tokens/');
+    await contractDeployed.mint(1, {
+      // from: "0xb1e04b696c913a0892cc6dffe604ee5397c98094",
+      value: hre.ethers.utils.parseEther('0.1'),
+      gasLimit: 511977,
+      gasPrice: 999000,
+    });
 
     let tx = await contractDeployed.mint(1, {
       // from: "0xb1e04b696c913a0892cc6dffe604ee5397c98094",
-      value: hre.ethers.utils.parseEther('1'),
+      value: hre.ethers.utils.parseEther('0.1'),
       gasLimit: 511977,
       gasPrice: 999000,
     });
@@ -35,12 +40,27 @@ async function mint(contractAddress, fromAddress) {
   }
 }
 
-// declare main funtion to loop over a list and call mint function
 async function main() {
   const accounts = await hre.ethers.getSigners();
   console.log(contracts.length + ' contracts found');
-  const tokenId = await mint(contracts[contracts.length - 1].address, accounts[0].address);
-  console.log(`🟢 ${accounts[0].address} minted one ${contracts[contracts.length - 1].name} #"${tokenId}"`);
+
+  for (let i = 0; i < 10; i++) {
+    const contract = contracts[contracts.length - 1];
+    const tokenId = await mint(contract.address, accounts[0].address);
+
+    console.log(`🟢 ${accounts[0].address} minted one ${contracts[contracts.length - 1].name} #"${tokenId}"`);
+
+    let balance = await accounts[0].getBalance();
+
+    console.log('Account 0 balance: ', balance);
+    if (balance < hre.ethers.utils.parseEther('0.1')) {
+      console.log('Account 0 balance is lower then 0.1 ether');
+      break;
+    }
+  }
+
+  
+
 }
 
 main().catch((error) => {
