@@ -10,8 +10,8 @@
     "contract-deploy": "cd contracts && yarn deploy",
     "contract-mint": "cd contracts && yarn mint",
     "graph-logs": "docker logs -f docker-graph-node-1",
-    "graph-create": "cd subgraph && yarn create-local",
-    "graph-deploy": "cd subgraph && yarn deploy-local"
+    "graph-compile": "cd subgraphs && yarn prepare",
+    "graph-deploy": "cd subgraphs && yarn deploy"
   },
   "keywords": [],
   "author": "",
