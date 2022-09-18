@@ -7,12 +7,6 @@ type Account @entity {
 	ERC1155transferFromEvent: [ERC1155Transfer!]! @derivedFrom(field: "from")
 	ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
 	ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
-	asERC20: ERC20Contract
-	ERC20balances: [ERC20Balance!]! @derivedFrom(field: "account")
-	ERC20approvalsOwner: [ERC20Approval!]! @derivedFrom(field: "owner")
-	ERC20approvalsSpender: [ERC20Approval!]! @derivedFrom(field: "spender")
-	ERC20transferFromEvent: [ERC20Transfer!]! @derivedFrom(field: "from")
-	ERC20transferToEvent: [ERC20Transfer!]! @derivedFrom(field: "to")
 	asERC721: ERC721Contract
 	ERC721tokens: [ERC721Token!]! @derivedFrom(field: "owner")
 	ERC721operatorOwner: [ERC721Operator!]! @derivedFrom(field: "owner")
@@ -67,47 +61,6 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
 	fromBalance: ERC1155Balance
 	to: Account
 	toBalance: ERC1155Balance
-	value: BigDecimal!
-	valueExact: BigInt!
-}
-type ERC20Contract @entity(immutable: true) {
-	id: Bytes!
-	asAccount: Account!
-	name: String
-	symbol: String
-	decimals: Int!
-	totalSupply: ERC20Balance!
-	balances: [ERC20Balance!]! @derivedFrom(field: "contract")
-	approvals: [ERC20Approval!]! @derivedFrom(field: "contract")
-	transfers: [ERC20Transfer!]! @derivedFrom(field: "contract")
-}
-type ERC20Balance @entity {
-	id: ID!
-	contract: ERC20Contract!
-	account: Account
-	value: BigDecimal!
-	valueExact: BigInt!
-	transferFromEvent: [ERC20Transfer!]! @derivedFrom(field: "fromBalance")
-	transferToEvent: [ERC20Transfer!]! @derivedFrom(field: "toBalance")
-}
-type ERC20Approval @entity {
-	id: ID!
-	contract: ERC20Contract!
-	owner: Account!
-	spender: Account!
-	value: BigDecimal!
-	valueExact: BigInt!
-}
-type ERC20Transfer implements Event @entity(immutable: true) {
-	id: ID!
-	emitter: Account!
-	transaction: Transaction!
-	timestamp: BigInt!
-	contract: ERC20Contract!
-	from: Account
-	fromBalance: ERC20Balance
-	to: Account
-	toBalance: ERC20Balance
 	value: BigDecimal!
 	valueExact: BigInt!
 }
