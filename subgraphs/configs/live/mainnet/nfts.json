@@ -1,0 +1,19 @@
+{
+  "output": "generated/live/mainnet/nfts.",
+  "chain": "mainnet",
+  "datasources": [
+    { "address": "0x9E07ae81615c689F946c908b1650f2624c9CD861", "startBlock":  7585305, "module": "erc721" },
+    { "address": "0x1761Ce62cf73230CC7359B0b52010E2def6B1331", "startBlock":  7585305, "module": "erc721" },
+    { "address": "0x0F5359f9cc97E124e18D8edbFC9EEF7D0EF69dc6", "startBlock":  7585305, "module": "erc721" },
+    { "address": "0x9F9eF95Be20c996D56F61706FDc53384D44E988A", "startBlock":  7585305, "module": "erc721" },
+    { "address": "0xca6a2a05bCbA901E5C5867d07c65b9f3eB3B6252", "startBlock":  7585305, "module": "erc721" }
+  ],
+  "deploy": [
+    {
+      "type": "local",
+      "name": "0x7An/nfts",
+      "node": "http://localhost:8020/",
+      "ipfs": "http://localhost:5001"
+    }
+  ]
+}

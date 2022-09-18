@@ -30,9 +30,9 @@ async function mint(contractAddress, fromAddress) {
 
     let receipt = await tx.wait();
 
-    tx = await contractDeployed.transferFrom(fromAddress, accounts[1].address, receipt.events[0].args.tokenId.toString(), {
-      from: fromAddress,
-    })
+    // tx = await contractDeployed.transferFrom(fromAddress, accounts[1].address, receipt.events[0].args.tokenId.toString(), {
+    //   from: fromAddress,
+    // })
 
     return receipt.events[0].args.tokenId.toString()
   } catch (error) {
