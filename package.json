@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "chain-up": "rm deployed_contracts && ganache-cli -p 8545 --account_keys_path ./keys.json",
+    "chain-up": "ganache-cli -p 8545 --account_keys_path ./keys.json",
     "node-up": "cd docker && docker-compose up -d",
     "node-down": "cd docker && docker-compose down && rm -fr data",
     "contract-deploy": "cd contracts && yarn deploy",
